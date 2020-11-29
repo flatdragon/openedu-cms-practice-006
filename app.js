@@ -1,6 +1,4 @@
-import mongo from 'mongoose'
-
-export default (express, bodyParser, createReadStream, crypto, http) => {
+export default (express, bodyParser, createReadStream, crypto, http, mongo) => {
     
     const app = express()
     const author = 'itmo282167'
