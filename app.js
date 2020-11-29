@@ -71,7 +71,7 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
         })
     })
     
-    app.post('/insert/', ({ body }, res) => {
+    app.post('/insert/', async ({ body }, res) => {
         const { login, password, url } = body
 
         const UserSchema = mongo.Schema({
