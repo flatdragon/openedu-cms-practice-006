@@ -92,6 +92,8 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
             const user = new User({ login, password })
 
             user.save((e) => {
+                connection.disconnect()
+
                 if (e) {
                     return res.send(e.message)
                 }
