@@ -70,7 +70,7 @@ export default (express, bodyParser, createReadStream, crypto, http, mongo) => {
     })
     
     app.post('/insert/', async ({ body }, res) => {
-        const { login, password, url } = body
+        const { login, password, URL  } = body
 
         const UserSchema = mongo.Schema({
             login: String,
@@ -79,7 +79,7 @@ export default (express, bodyParser, createReadStream, crypto, http, mongo) => {
 
         const User = mongo.model('User', UserSchema)
 
-        const connection = await mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+        const connection = await mongo.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
         const users = await User.find({ login, password })
 
