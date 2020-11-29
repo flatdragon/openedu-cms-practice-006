@@ -81,24 +81,36 @@ export default (express, bodyParser, createReadStream, crypto, http, mongo) => {
 
         const connection = await mongo.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
-        const users = await User.find({ login, password })
-
-        if (users.length > 0) {
+        const user = new User({ login, password })
+        
+        user.save((e) => {
             connection.disconnect()
-            return res.send(users[0])
-        } else {
-            const user = new User({ login, password })
 
-            user.save((e) => {
-                connection.disconnect()
+            if (e) {
+                return res.send(e.message)
+            }
 
-                if (e) {
-                    return res.send(e.message)
-                }
+            return res.send(user)
+        })
 
-                return res.send(user)
-            })
-        }
+        // const users = await User.find({ login, password })
+
+        // if (users.length > 0) {
+        //     connection.disconnect()
+        //     return res.send(users[0])
+        // } else {
+        //     const user = new User({ login, password })
+
+        //     user.save((e) => {
+        //         connection.disconnect()
+
+        //         if (e) {
+        //             return res.send(e.message)
+        //         }
+
+        //         return res.send(user)
+        //     })
+        // }
     })
     
     app.all('*', (req, res) => {
